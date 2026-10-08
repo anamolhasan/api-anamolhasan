@@ -25,6 +25,15 @@ router.put(
   ProjectController.updateProject
 );
 
+// The client updates with PATCH (partial payload); keep it mapped to the same
+// controller so both verbs stay in sync.
+router.patch(
+  "/:id",
+  checkAuth(Role.ADMIN, Role.SUPER_ADMIN),
+  validateRequest(ProjectValidation.updateProjectZodSchema),
+  ProjectController.updateProject
+);
+
 router.delete(
   "/:id",
   checkAuth(Role.ADMIN, Role.SUPER_ADMIN),
